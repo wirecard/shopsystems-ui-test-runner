@@ -45,7 +45,7 @@ cd ${REPO_NAME}
 
 git add ${PROJECT_FOLDER}/${GATEWAY}/${TODAY}/*
 git commit -m "Add failed test screenshots from https://github.com/wirecard/${SHOP_SYSTEM_NAME}/actions/runs/${GITHUB_RUN_ID}"
-git push -q https://${GITHUBTOKEN}@github.com/wirecard/${REPO_NAME}.git master
+git push -q https://${GITHUB_TOKEN}@github.com/wirecard/${REPO_NAME}.git master
 
 export SCREENSHOT_COMMIT_HASH=$(git rev-parse --verify HEAD)
 if [[ $1 == 'fail' ]]; then
