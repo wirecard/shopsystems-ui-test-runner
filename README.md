@@ -16,7 +16,7 @@ Clone to your workspace and use it in your workflow like in e.g
 `https://github.com/wirecard/woocommerce-ee/blob/master/.github/workflows/run-acceptance-tests.yml` 
 
 
-Configuring other
+Configuring for other extension
 =====
 It is possible to extend this project with specific shop system. Add new data with respective output file paths in
 `configuration.json` file content:
