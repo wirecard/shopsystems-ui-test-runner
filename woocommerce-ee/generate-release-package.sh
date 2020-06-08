@@ -5,4 +5,4 @@ TARGET_DIRECTORY="wirecard-woocommerce-extension"
 
 composer install --no-dev
 
-zip -r extension-shop-system-builder/woocommerce-ee/woocommerce-wirecard-ee.zip ${TARGET_DIRECTORY} -x "*tests*" -x "*Test*" -x "*codeception*"
+zip -r shopsystems-ui-test-runner/woocommerce-ee/woocommerce-wirecard-ee.zip ${TARGET_DIRECTORY} -x "*tests*" -x "*Test*" -x "*codeception*"

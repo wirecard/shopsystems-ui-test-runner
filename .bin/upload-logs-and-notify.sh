@@ -6,9 +6,6 @@ export REPO_LINK="https://github.com/wirecard/${REPO_NAME}"
 export REPO_ADDRESS="${REPO_LINK}.git"
 
 echo "Timestamp : $(date)"
-RANDOM_VALUE=$[ ( RANDOM % 30 ) * ${WOOCOMMERCE_NUMBER} + 1 ]
-echo "Sleeping for: ${RANDOM_VALUE}"
-sleep ${RANDOM_VALUE}s
 
 git clone ${REPO_ADDRESS}
 export TODAY=$(date +%Y-%m-%d)
@@ -31,9 +28,9 @@ fi
 
 export SHOP_SYSTEM=${SHOP_SYSTEM_NAME%-*}
 
-HTML_REPORT=$(jq -r ".$SHOP_SYSTEM.html" extension-shop-system-builder/configuration.json)
-XML_REPORT=$(jq -r ".$SHOP_SYSTEM.xml" extension-shop-system-builder/configuration.json)
-PNG_REPORT=$(jq -r ".$SHOP_SYSTEM.png" extension-shop-system-builder/configuration.json)
+HTML_REPORT=$(jq -r ".$SHOP_SYSTEM.html" shopsystems-ui-test-runner/configuration.json)
+XML_REPORT=$(jq -r ".$SHOP_SYSTEM.xml" shopsystems-ui-test-runner/configuration.json)
+PNG_REPORT=$(jq -r ".$SHOP_SYSTEM.png" shopsystems-ui-test-runner/configuration.json)
 
 cp ${HTML_REPORT} ${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}
 cp ${XML_REPORT} ${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}
@@ -50,5 +47,5 @@ git push -q https://${GITHUB_TOKEN}@github.com/wirecard/${REPO_NAME}.git master
 export SCREENSHOT_COMMIT_HASH=$(git rev-parse --verify HEAD)
 if [[ $1 == 'fail' ]]; then
     cd ..
-    bash extension-shop-system-builder/.bin/send-notify.sh
+    bash shopsystems-ui-test-runner/.bin/send-notify.sh
 fi

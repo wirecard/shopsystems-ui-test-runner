@@ -2,7 +2,7 @@
 set -e # Exit with nonzero exit code if anything fails
 TIMESTAMP=$(date +%s)
 export SHOP_SYSTEM=${SHOP_SYSTEM_NAME%-*}
-export DEFAULT_REPO='extension-shop-system-builder'
+export DEFAULT_REPO='shopsystems-ui-test-runner'
 
 NGROK_SUBDOMAIN="${RANDOM}${TIMESTAMP}-${SHOP_SYSTEM_NAME}-${SHOP_SYSTEM_VERSION}"
 export NGROK_URL="http://${NGROK_SUBDOMAIN}.ngrok.io"

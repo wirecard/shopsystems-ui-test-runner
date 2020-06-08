@@ -19,7 +19,7 @@ curl -X POST -H 'Content-type: application/json' \
     Build Number: ${GITHUB_RUN_ID}\n
     Branch: ${GIT_BRANCH}', 'channel': '${CHANNEL}'}" ${SLACK_ROOMS}
 
-PNG_REPORT=$(jq -r ".$SHOP_SYSTEM.png" extension-shop-system-builder/configuration.json)
+PNG_REPORT=$(jq -r ".$SHOP_SYSTEM.png" shopsystems-ui-test-runner/configuration.json)
 
 FAILED_TESTS=$(ls -1q "$PNG_REPORT" | wc -l)
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e # Exit with nonzero exit code if anything fails
 export WOOCOMMERCE_CONTAINER_NAME=woo_commerce
-export WOOCOMMERCE_PATH="extension-shop-system-builder/woocommerce-ee"
+export WOOCOMMERCE_PATH="shopsystems-ui-test-runner/woocommerce-ee"
 export ENV_FILE="${WOOCOMMERCE_PATH}/.env"
 export DOCKER_COMPOSE_FILE="${WOOCOMMERCE_PATH}/docker-compose.yml"
 
