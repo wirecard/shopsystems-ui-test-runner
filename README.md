@@ -51,8 +51,6 @@ Structure
     ├── woocommerce-ee                      # woocommerce related files
     |    ├── .env                           # environemnt variables
     |    | 
-    |    ├── compatible-shop-releases.txt   # compatible shop versions
-    |    | 
     |    ├── docker-compose.yml       
     |    |
     |    ├── Dockerfile                     # woocommerce Dockerfile
