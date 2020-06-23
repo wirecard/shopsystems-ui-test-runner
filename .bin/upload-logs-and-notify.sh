@@ -4,6 +4,7 @@ set -e # Exit with nonzero exit code if anything fails
 export REPO_NAME='reports'
 export REPO_LINK="https://github.com/wirecard/${REPO_NAME}"
 export REPO_ADDRESS="${REPO_LINK}.git"
+export GATEWAY='API-TEST'
 
 echo "Timestamp : $(date)"
 
