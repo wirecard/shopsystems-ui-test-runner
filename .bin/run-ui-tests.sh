@@ -18,6 +18,7 @@ for ARGUMENT in "$@"; do
   SHOP_SYSTEM) SHOP_SYSTEM=${VALUE} ;;
   SHOP_VERSION) SHOP_VERSION=${VALUE} ;;
   FEATURE_FILES) FEATURE_FILES=${VALUE};;
+  TEST_SUITE_BRANCH) TEST_SUITE_BRANCH=${VALUE};;
   BROWSERSTACK_USER) BROWSERSTACK_USER=${VALUE} ;;
   BROWSERSTACK_ACCESS_KEY) BROWSERSTACK_ACCESS_KEY=${VALUE} ;;
   *) ;;
@@ -31,23 +32,23 @@ case ${GIT_BRANCH} in
 esac
 
 if [ -n "$FEATURE_FILES" ]; then
-  composer require wirecard/shopsystem-ui-testsuite:dev-${GIT_BRANCH}
+  composer require wirecard/shopsystem-ui-testsuite:dev-"${TEST_SUITE_BRANCH}"
 
   for FEATURE_FILE in ${FEATURE_FILES}; do
     for i in {1..30}; do
       if [[ $FEATURE_FILE == *".feature"* ]]; then
-        docker-compose --env-file ${ENV_FILE} -f ${DOCKER_COMPOSE_FILE} run \
+        docker-compose --env-file "${ENV_FILE}" -f "${DOCKER_COMPOSE_FILE}" run \
 	  -e SHOP_SYSTEM="${SHOP_SYSTEM}" \
 	  -e SHOP_URL="${NGROK_URL}" \
 	  -e SHOP_VERSION="${SHOP_VERSION}" \
-	  -e EXTENSION_VERSION="${GIT_BRANCH}" \
+	  -e EXTENSION_VERSION="${TEST_SUITE_BRANCH}" \
 	  -e DB_HOST="${SHOP_DB_SERVER}" \
 	  -e DB_NAME="${SHOP_DB_NAME}" \
 	  -e DB_USER="${SHOP_DB_USER}" \
 	  -e DB_PASSWORD="${SHOP_DB_PASSWORD}" \
 	  -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
 	  -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
-	  codecept run acceptance $FEATURE_FILE \
+	  codecept run acceptance "$FEATURE_FILE" \
 	  -g "${TEST_GROUP}" -g "${SHOP_SYSTEM}" \
 	  --env ci --html --xml
       fi
@@ -56,14 +57,14 @@ if [ -n "$FEATURE_FILES" ]; then
 else
   composer require wirecard/shopsystem-ui-testsuite:dev-master
 
-  docker-compose --env-file ${ENV_FILE} -f ${DOCKER_COMPOSE_FILE} run \
+  docker-compose --env-file "${ENV_FILE}" -f "${DOCKER_COMPOSE_FILE}" run \
     -e SHOP_SYSTEM="${SHOP_SYSTEM}" \
     -e SHOP_URL="${NGROK_URL}" \
     -e SHOP_VERSION="${SHOP_VERSION}" \
     -e EXTENSION_VERSION="${GIT_BRANCH}"
     -e DB_HOST="${SHOP_DB_SERVER}" \
     -e DB_NAME="${SHOP_DB_NAME}" \
-    -e DB_USER="${SHOP_DB_USER}"
+    -e DB_USER="${SHOP_DB_USER}" \
     -e DB_PASSWORD="${SHOP_DB_PASSWORD}" \
     -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
     -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}"
