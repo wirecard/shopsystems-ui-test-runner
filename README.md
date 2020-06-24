@@ -33,6 +33,15 @@ It is possible to extend this project with specific shop system. Add new data wi
 Also add a new folder for the respective shop system and it docker files with script for spinning the shop system.
 
 
+Other
+=====
+In run-ui-tests.sh we have possibility to run ui tests on: 
+
+    - https://github.com/wirecard/shopsystems-ui-testsuite master branch (this will be triggered after pull request changes in WooCommerce itself)
+    - https://github.com/wirecard/shopsystems-ui-testsuite respective branch that has been created. In order to trigger 
+      second workflow, github action will check for modified/added .feature files which will be stored inside $FEATURE_FILES variable.
+
+
 Structure
 =====
 
