@@ -30,7 +30,7 @@ case ${GIT_BRANCH} in
 esac
 
 if [ -n "$FEATURE_FILES" ]; then
-  composer require tatsta/shopsystem-ui-testsuite:dev-${GIT_BRANCH}
+  composer require tatsta/shopsystem-ui-testsuite:dev-master
 
   for FEATURE_FILE in ${FEATURE_FILES}; do
     for i in {1..30}; do
