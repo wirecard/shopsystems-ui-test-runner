@@ -61,13 +61,13 @@ else
     -e SHOP_SYSTEM="${SHOP_SYSTEM}" \
     -e SHOP_URL="${NGROK_URL}" \
     -e SHOP_VERSION="${SHOP_VERSION}" \
-    -e EXTENSION_VERSION="${GIT_BRANCH}"
+    -e EXTENSION_VERSION="${GIT_BRANCH}" \
     -e DB_HOST="${SHOP_DB_SERVER}" \
     -e DB_NAME="${SHOP_DB_NAME}" \
     -e DB_USER="${SHOP_DB_USER}" \
     -e DB_PASSWORD="${SHOP_DB_PASSWORD}" \
     -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
-    -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}"
+    -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
     codecept run acceptance \
     -g "${TEST_GROUP}" -g "${SHOP_SYSTEM}" \
     --env ci --html --xml
