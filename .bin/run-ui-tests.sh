@@ -50,7 +50,7 @@ if [ -n "$FEATURE_FILES" ]; then
     done
   done
 else
-  composer require wirecard/shopsystem-ui-testsuite:dev-master
+  composer require wirecard/shopsystem-ui-testsuite:dev-${TEST_SUITE_BRANCH}
 
   TEST_GROUP_PREFIX=${TEST_GROUP%_*}
   TEST_NUMBER=${TEST_GROUP#*group_}
