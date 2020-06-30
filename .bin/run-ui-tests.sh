@@ -63,6 +63,8 @@ else
     fi
   done
 
+  echo "Running codecept run acceptance -g ${TEST_GROUP} ${EXCLUDE_TEST_GROUP_FLAG} -g ${SHOP_SYSTEM}"
+
   docker-compose --env-file "${ENV_FILE}" -f "${DOCKER_COMPOSE_FILE}" run \
     -e SHOP_SYSTEM="${SHOP_SYSTEM}" \
     -e SHOP_URL="${NGROK_URL}" \
@@ -75,6 +77,6 @@ else
     -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
     -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
     codecept run acceptance \
-    -g "${TEST_GROUP}" -g "${SHOP_SYSTEM}" "${EXCLUDE_TEST_GROUP_FLAG}" \
+    -g "${TEST_GROUP}" "${EXCLUDE_TEST_GROUP_FLAG}" -g "${SHOP_SYSTEM}" \
     --env ci --html --xml
 fi
