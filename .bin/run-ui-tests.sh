@@ -93,6 +93,7 @@ else
     -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
     codecept run acceptance \
     -g "${SHOP_SYSTEM}" -g "${TEST_GROUP}" \
-#     -g "${SHOP_SYSTEM}" -g "${TEST_GROUP}" "${EXCLUDE_TEST_GROUP_FLAG}" \
     --env ci --html --xml
 fi
+
+#     -g "${SHOP_SYSTEM}" -g "${TEST_GROUP}" "${EXCLUDE_TEST_GROUP_FLAG}" \
