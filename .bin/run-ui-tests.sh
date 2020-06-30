@@ -50,6 +50,7 @@ if [ -n "$FEATURE_FILES" ]; then
     done
   done
 else
+  echo "installing test suite ${TEST_SUITE_BRANCH}"
   composer require wirecard/shopsystem-ui-testsuite:dev-${TEST_SUITE_BRANCH}
 
   TEST_GROUP_PREFIX=${TEST_GROUP%_*}
@@ -62,6 +63,7 @@ else
       EXCLUDE_TEST_GROUP_FLAG="${EXCLUDE_TEST_GROUP_FLAG} -x ${TEST_GROUP_PREFIX}_${i}"
     fi
   done
+
 
   echo "Running codecept run acceptance -g ${SHOP_SYSTEM} -g ${TEST_GROUP} ${EXCLUDE_TEST_GROUP_FLAG}"
 
