@@ -19,12 +19,12 @@ for ARGUMENT in "$@"; do
   FEATURE_FILES) FEATURE_FILES=${VALUE};;
   TEST_SUITE_BRANCH) TEST_SUITE_BRANCH=${VALUE};;
   TEST_GROUP) TEST_GROUP=${VALUE};;
+  NUMBER_OF_TEST_GROUPS) NUMBER_OF_TEST_GROUPS=${NUMBER_OF_TEST_GROUPS};;
   BROWSERSTACK_USER) BROWSERSTACK_USER=${VALUE} ;;
   BROWSERSTACK_ACCESS_KEY) BROWSERSTACK_ACCESS_KEY=${VALUE} ;;
   *) ;;
   esac
 done
-
 
 if [ -n "$FEATURE_FILES" ]; then
   composer require wirecard/shopsystem-ui-testsuite:dev-"${TEST_SUITE_BRANCH}"
@@ -52,6 +52,17 @@ if [ -n "$FEATURE_FILES" ]; then
 else
   composer require wirecard/shopsystem-ui-testsuite:dev-master
 
+  TEST_GROUP_PREFIX=${TEST_GROUP%_*}
+  TEST_NUMBER=${TEST_GROUP#*group_}
+  EXCLUDE_TEST_GROUP_FLAG=""
+
+  for (( i=1; i<=$NUMBER_OF_TEST_GROUPS; i++))
+  do
+    if [ $i != "$TEST_NUMBER" ]; then
+      EXCLUDE_TEST_GROUP_FLAG="${EXCLUDE_TEST_GROUP_FLAG} -x ${TEST_GROUP_PREFIX}_${i}"
+    fi
+  done
+
   docker-compose --env-file "${ENV_FILE}" -f "${DOCKER_COMPOSE_FILE}" run \
     -e SHOP_SYSTEM="${SHOP_SYSTEM}" \
     -e SHOP_URL="${NGROK_URL}" \
@@ -64,6 +75,6 @@ else
     -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
     -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
     codecept run acceptance \
-    -g "${TEST_GROUP}" -g "${SHOP_SYSTEM}" \
+    -g "${TEST_GROUP}" -g "${SHOP_SYSTEM}" "${EXCLUDE_TEST_GROUP_FLAG}" \
     --env ci --html --xml
 fi
