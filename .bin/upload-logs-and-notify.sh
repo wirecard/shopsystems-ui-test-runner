@@ -6,6 +6,10 @@ export REPO_LINK="https://github.com/wirecard/${REPO_NAME}"
 export REPO_ADDRESS="${REPO_LINK}.git"
 export GATEWAY='API-TEST'
 
+# add random sleep time to minimize conflict possibility
+RANDOM_VALUE=$[ ( RANDOM % 30 ) * $OPENCART_RELEASE_VERSION + 1 ]
+echo "Sleeping for: ${RANDOM_VALUE}"
+sleep ${RANDOM_VALUE}s
 echo "Timestamp : $(date)"
 
 git clone ${REPO_ADDRESS}
