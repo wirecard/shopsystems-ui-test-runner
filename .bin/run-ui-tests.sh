@@ -60,7 +60,7 @@ else
   for (( i=1; i<=$NUMBER_OF_TEST_GROUPS; i++))
   do
     if [ $i != "$TEST_NUMBER" ]; then
-      EXCLUDE_TEST_GROUP_FLAG="${EXCLUDE_TEST_GROUP_FLAG} -x ${TEST_GROUP_PREFIX}_${i}"
+      EXCLUDE_TEST_GROUP_FLAG="-x ${TEST_GROUP_PREFIX}_${i} ${EXCLUDE_TEST_GROUP_FLAG}"
     fi
   done
 
@@ -92,6 +92,7 @@ else
     -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
     -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
     codecept run acceptance \
-    -g "${SHOP_SYSTEM}" -g "${TEST_GROUP}" "${EXCLUDE_TEST_GROUP_FLAG}" \
+    -g "${SHOP_SYSTEM}" -g "${TEST_GROUP}" \
+#     -g "${SHOP_SYSTEM}" -g "${TEST_GROUP}" "${EXCLUDE_TEST_GROUP_FLAG}" \
     --env ci --html --xml
 fi
