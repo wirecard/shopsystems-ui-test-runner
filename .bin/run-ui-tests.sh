@@ -91,7 +91,7 @@ else
     -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
     -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
     codecept run acceptance \
-    -g "${SHOP_SYSTEM}" -g "${TEST_GROUP}" \
+    -g "${SHOP_SYSTEM}" -g "${TEST_GROUP}" --skip-group test_group_3 \
     --env ci --html --xml
 fi
 
