@@ -60,7 +60,7 @@ else
   for (( i=1; i<=$NUMBER_OF_TEST_GROUPS; i++))
   do
     if [ $i != "$TEST_NUMBER" ]; then
-      EXCLUDE_TEST_GROUP_FLAG=" --skip-group ${TEST_GROUP_PREFIX}_${i} ${EXCLUDE_TEST_GROUP_FLAG}"
+      EXCLUDE_TEST_GROUP_FLAG=" --skip-group ${TEST_GROUP_PREFIX}_${i}${EXCLUDE_TEST_GROUP_FLAG}"
     fi
   done
 
