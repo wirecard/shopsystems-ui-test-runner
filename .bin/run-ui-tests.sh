@@ -79,7 +79,7 @@ else
     codecept run acceptance \
     -g "${SHOP_SYSTEM}" -g "${TEST_GROUP}" --skip-group "${EXCLUDED_TEST_GROUP_ARRAY[0]}" \
     --skip-group "${EXCLUDED_TEST_GROUP_ARRAY[1]}" \
-    --env ci --html --xml
+    --env ci --html report"${TEST_GROUP}".html --xml report"${TEST_GROUP}".xml
 
     #TODO - this call needs to be adapted to have --skip group flags generated dynamially, so if we have different
     #amount of groups this still works
