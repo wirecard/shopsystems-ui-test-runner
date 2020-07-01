@@ -36,6 +36,7 @@ if [ -n "$FEATURE_FILES" ]; then
       ], 'channel': '${CHANNEL}'
   }"  ${SLACK_ROOMS};
 else
+  REPORT_FILE="report${TEST_GROUP}.html"
   curl -X POST -H 'Content-type: application/json' --data "{
       'attachments': [
           {
