@@ -75,7 +75,7 @@ else
     -e DB_PASSWORD="${SHOP_DB_PASSWORD}" \
     -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
     -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
-    codecept config:validate
+    codecept config:validate acceptance
 
   echo "Running codecept run acceptance -g ${SHOP_SYSTEM} -g ${TEST_GROUP}${EXCLUDE_TEST_GROUP_FLAG} --env ci --html --xml"
 
