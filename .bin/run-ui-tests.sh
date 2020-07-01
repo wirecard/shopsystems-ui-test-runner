@@ -55,29 +55,14 @@ else
 
   TEST_GROUP_PREFIX=${TEST_GROUP%_*}
   TEST_NUMBER=${TEST_GROUP#*group_}
-  EXCLUDE_TEST_GROUP_FLAG=""
 
+  EXCLUDED_TEST_GROUP_ARRAY=()
   for (( i=1; i<=$NUMBER_OF_TEST_GROUPS; i++))
   do
     if [ $i != "$TEST_NUMBER" ]; then
-      EXCLUDE_TEST_GROUP_FLAG=" --skip-group ${TEST_GROUP_PREFIX}_${i}${EXCLUDE_TEST_GROUP_FLAG}"
+      EXCLUDED_TEST_GROUP_ARRAY=("${EXCLUDED_TEST_GROUP_ARRAY[@]}" "${TEST_GROUP_PREFIX}_${i}")
     fi
   done
-
-    docker-compose --env-file "${ENV_FILE}" -f "${DOCKER_COMPOSE_FILE}" run \
-    -e SHOP_SYSTEM="${SHOP_SYSTEM}" \
-    -e SHOP_URL="${NGROK_URL}" \
-    -e SHOP_VERSION="${SHOP_VERSION}" \
-    -e EXTENSION_VERSION="${GIT_BRANCH}" \
-    -e DB_HOST="${SHOP_DB_SERVER}" \
-    -e DB_NAME="${SHOP_DB_NAME}" \
-    -e DB_USER="${SHOP_DB_USER}" \
-    -e DB_PASSWORD="${SHOP_DB_PASSWORD}" \
-    -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
-    -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
-    codecept config:validate acceptance
-
-  echo "Running codecept run acceptance -g ${SHOP_SYSTEM} -g ${TEST_GROUP}${EXCLUDE_TEST_GROUP_FLAG} --env ci --html --xml"
 
   docker-compose --env-file "${ENV_FILE}" -f "${DOCKER_COMPOSE_FILE}" run \
     -e SHOP_SYSTEM="${SHOP_SYSTEM}" \
@@ -91,8 +76,10 @@ else
     -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
     -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
     codecept run acceptance \
-    -g "${SHOP_SYSTEM}" -g "${TEST_GROUP}" --skip-group test_group_3 \
+    -g "${SHOP_SYSTEM}" -g "${TEST_GROUP}" --skip-group "${EXCLUDED_TEST_GROUP_ARRAY[0]}" \
+    --skip-group "${EXCLUDED_TEST_GROUP_ARRAY[1]}" \
     --env ci --html --xml
-fi
 
-#     -g "${SHOP_SYSTEM}" -g "${TEST_GROUP}" "${EXCLUDE_TEST_GROUP_FLAG}" \
+    #TODO - this call needs to be adapted to have --skip group flags generated dynamially, so if we have different
+    #amount of groups this still works
+fi
