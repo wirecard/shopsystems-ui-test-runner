@@ -64,6 +64,7 @@ else
     fi
   done
 
+  echo "Running    codecept run acceptance -g ${SHOP_SYSTEM} -g ${TEST_GROUP} --skip-group ${EXCLUDED_TEST_GROUP_ARRAY[0]} --skip-group ${EXCLUDED_TEST_GROUP_ARRAY[1]} --env ci --html --xml"
   docker-compose --env-file "${ENV_FILE}" -f "${DOCKER_COMPOSE_FILE}" run \
     -e SHOP_SYSTEM="${SHOP_SYSTEM}" \
     -e SHOP_URL="${NGROK_URL}" \
