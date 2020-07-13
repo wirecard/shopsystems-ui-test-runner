@@ -50,7 +50,7 @@ if [ -n "$FEATURE_FILES" ]; then
 	  -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
 	  codecept run acceptance "$FEATURE_FILE" \
 	  -g "${TEST_GROUP}" -g "${SHOP_SYSTEM}" \
-	  --env ci --html --xml
+	  --env ci --steps -vvv
       fi
     done
   done
@@ -70,5 +70,5 @@ else
     -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
     codecept run acceptance \
     -g "${TEST_GROUP}" -g "${SHOP_SYSTEM}" \
-    --env ci --html --xml
+    --env ci --steps -vvv
 fi
