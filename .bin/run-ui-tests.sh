@@ -32,7 +32,7 @@ case ${GIT_BRANCH} in
 esac
 
 if [ -n "$FEATURE_FILES" ]; then
-  composer require wirecard/shopsystem-ui-testsuite:dev-"${TEST_SUITE_BRANCH}"
+  composer require wirecard/shopsystem-ui-testsuite:dev-TPWDCEE-7032-configuration
 
   for FEATURE_FILE in ${FEATURE_FILES}; do
     for i in {1..30}; do
@@ -55,7 +55,7 @@ if [ -n "$FEATURE_FILES" ]; then
     done
   done
 else
-  composer require wirecard/shopsystem-ui-testsuite:dev-master
+  composer require wirecard/shopsystem-ui-testsuite:dev-TPWDCEE-7032-configuration
 
   docker-compose --env-file "${ENV_FILE}" -f "${DOCKER_COMPOSE_FILE}" run \
     -e SHOP_SYSTEM="${SHOP_SYSTEM}" \
