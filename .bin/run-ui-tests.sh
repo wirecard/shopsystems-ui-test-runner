@@ -48,7 +48,7 @@ if [ -n "$FEATURE_FILES" ]; then
 	  -e DB_PASSWORD="${SHOP_DB_PASSWORD}" \
 	  -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
 	  -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
-	  codecept run acceptance "$FEATURE_FILE" \
+	  codecept run acceptance "$FEATURE_FILE" tests/acceptance/CreditCard/CreditCardConfigurationHappyPath.feature \
 	  -g "${TEST_GROUP}" -g "${SHOP_SYSTEM}" \
 	  --env ci --steps -vvv
       fi
@@ -68,7 +68,7 @@ else
     -e DB_PASSWORD="${SHOP_DB_PASSWORD}" \
     -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
     -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
-    codecept run acceptance \
+    codecept run acceptance tests/acceptance/CreditCard/CreditCardConfigurationHappyPath.feature \
     -g "${TEST_GROUP}" -g "${SHOP_SYSTEM}" \
     --env ci --steps -vvv
 fi
