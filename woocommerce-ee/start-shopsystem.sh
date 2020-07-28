@@ -58,3 +58,7 @@ docker-compose --env-file ${ENV_FILE} -f ${DOCKER_COMPOSE_FILE} exec -T web wp t
 
 #install shop pages
 docker-compose --env-file ${ENV_FILE} -f ${DOCKER_COMPOSE_FILE} exec -T web wp wc tool run install_pages --user=admin --allow-root
+
+#make PayPal order number unique
+docker-compose --env-file ${ENV_FILE} -f ${DOCKER_COMPOSE_FILE} exec -T web bash -c "sed -i 's/ = \$this->orderNumber\;/ = \$this->orderNumber . md5(time())\;/' /var/www/html/wp-content/plugins/wirecard-woocommerce-extension/vendor/wirecard/payment-sdk-php/src/Transaction/PayPalTransaction.php"
+
