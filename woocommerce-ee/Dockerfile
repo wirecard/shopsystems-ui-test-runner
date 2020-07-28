@@ -1,5 +1,5 @@
 ARG PHP_VERSION
-FROM wordpress:php${PHP_VERSION}-apache
+FROM wordpress:5.4.2-php${PHP_VERSION}-apache
 # example :
 # docker build --build-arg SHOP_SYSTEM_VERSION=2.6.14 --build-arg STOREFRONT_VERSION=2.1.8 -t woo .
 
