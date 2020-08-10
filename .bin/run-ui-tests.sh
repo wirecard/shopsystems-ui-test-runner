@@ -5,9 +5,6 @@ set -a
 source ${DEFAULT_REPO}/${SHOP_SYSTEM_NAME}/.env
 set +a
 
-export ENV_FILE=${DEFAULT_REPO}/${SHOP_SYSTEM_NAME}/.env
-export DOCKER_COMPOSE_FILE=${DEFAULT_REPO}/${SHOP_SYSTEM_NAME}/docker-compose.yml
-
 for ARGUMENT in "$@"; do
   KEY=$(echo "${ARGUMENT}" | cut -f1 -d=)
   VALUE=$(echo "${ARGUMENT}" | cut -f2 -d=)
@@ -37,7 +34,7 @@ if [ -n "$FEATURE_FILES" ]; then
   for FEATURE_FILE in ${FEATURE_FILES}; do
     for i in {1..30}; do
       if [[ $FEATURE_FILE == *".feature"* ]]; then
-        docker-compose --env-file "${ENV_FILE}" -f "${DOCKER_COMPOSE_FILE}" run \
+        docker run \
 	  -e SHOP_SYSTEM="${SHOP_SYSTEM}" \
 	  -e SHOP_URL="${NGROK_URL}" \
 	  -e SHOP_VERSION="${SHOP_VERSION}" \
@@ -57,7 +54,7 @@ if [ -n "$FEATURE_FILES" ]; then
 else
   composer require wirecard/shopsystem-ui-testsuite:dev-master
 
-  docker-compose --env-file "${ENV_FILE}" -f "${DOCKER_COMPOSE_FILE}" run \
+  docker run \
     -e SHOP_SYSTEM="${SHOP_SYSTEM}" \
     -e SHOP_URL="${NGROK_URL}" \
     -e SHOP_VERSION="${SHOP_VERSION}" \
