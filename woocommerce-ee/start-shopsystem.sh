@@ -20,7 +20,7 @@ if [[ ${USE_SPECIFIC_EXTENSION_RELEASE}  == "1" ]]; then
   git checkout tags/"${SPECIFIC_RELEASED_SHOP_EXTENSION_VERSION}"
 fi
 
-git clone https://"${GITHUB_TOKEN}":@github.com/wirecard-cee/docker-images.git
+git clone --depth 1 https://"${GITHUB_TOKEN}":@github.com/wirecard-cee/docker-images.git
 
 cd docker-images/woocommerce-ci
 

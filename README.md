@@ -41,6 +41,7 @@ In run-ui-tests.sh we have possibility to run ui tests on:
     - https://github.com/wirecard/shopsystems-ui-testsuite respective branch that has been created. In order to trigger 
       second workflow, github action will check for modified/added .feature files which will be stored inside $FEATURE_FILES variable.
 
+Also, Wordpress version has been hardcoded and in case of increasing compatibility, this version has to be changed manually.
 
 Structure
 =====

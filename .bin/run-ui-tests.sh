@@ -29,22 +29,30 @@ case ${GIT_BRANCH} in
 esac
 
 if [ -n "$FEATURE_FILES" ]; then
-  git clone  --branch "${TEST_SUITE_BRANCH}" https://github.com/wirecard/shopsystems-ui-testsuite.git
-  cd shopsystems-ui-testsuite
-
-  echo "Installing shopsystems-ui-testsuite dependencies"
-  docker run --rm -it --volume $(pwd):/app prooph/composer:7.2 install --dev
-
-  export SHOP_SYSTEM="${SHOP_SYSTEM}"
-  export SHOP_URL="${NGROK_URL}"
-  export SHOP_VERSION="${SHOP_VERSION}"
+  TEST_SUITE_BRANCH=${TEST_SUITE_BRANCH}
   export EXTENSION_VERSION="${TEST_SUITE_BRANCH}"
-  export DB_HOST="${SHOP_DB_SERVER}"
-  export DB_NAME="${SHOP_DB_NAME}"
-  export DB_USER="${SHOP_DB_USER}"
-  export DB_PASSWORD="${SHOP_DB_PASSWORD}"
-  export BROWSERSTACK_USER="${BROWSERSTACK_USER}"
-  export BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}"
+else
+  TEST_SUITE_BRANCH=master
+  export EXTENSION_VERSION="${GIT_BRANCH}"
+fi
+
+git clone  --branch "${TEST_SUITE_BRANCH}" https://github.com/wirecard/shopsystems-ui-testsuite.git
+cd shopsystems-ui-testsuite
+
+echo "Installing shopsystems-ui-testsuite dependencies"
+docker run --rm -i --volume $(pwd):/app prooph/composer:7.2 install --dev
+
+export SHOP_SYSTEM="${SHOP_SYSTEM}"
+export SHOP_URL="${NGROK_URL}"
+export SHOP_VERSION="${SHOP_VERSION}"
+export DB_HOST="${SHOP_DB_SERVER}"
+export DB_NAME="${SHOP_DB_NAME}"
+export DB_USER="${SHOP_DB_USER}"
+export DB_PASSWORD="${SHOP_DB_PASSWORD}"
+export BROWSERSTACK_USER="${BROWSERSTACK_USER}"
+export BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}"
+
+if [ -n "$FEATURE_FILES" ]; then
 
   for FEATURE_FILE in ${FEATURE_FILES}; do
     for i in {1..30}; do
@@ -58,25 +66,8 @@ if [ -n "$FEATURE_FILES" ]; then
   done
 else
 
-  git clone  --branch master https://github.com/wirecard/shopsystems-ui-testsuite.git
-  cd shopsystems-ui-testsuite
-
-  echo "Installing shopsystems-ui-testsuite dependencies"
-  docker run --rm -i --volume $(pwd):/app prooph/composer:7.2 install --dev
-
-  export SHOP_SYSTEM="${SHOP_SYSTEM}"
-  export SHOP_URL="${NGROK_URL}"
-  export SHOP_VERSION="${SHOP_VERSION}"
-  export EXTENSION_VERSION="${GIT_BRANCH}"
-  export DB_HOST="${SHOP_DB_SERVER}"
-  export DB_NAME="${SHOP_DB_NAME}"
-  export DB_USER="${SHOP_DB_USER}"
-  export DB_PASSWORD="${SHOP_DB_PASSWORD}"
-  export BROWSERSTACK_USER="${BROWSERSTACK_USER}"
-  export BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}"
-
   echo "Running tests"
-  vendor/bin/codecept run acceptance tests/acceptance/Alipay/AlipayCrossBorderInitialTransaction.feature \
+  vendor/bin/codecept run acceptance \
     -g "${TEST_GROUP}" -g "${SHOP_SYSTEM}" \
     --env ci --html --xml
 fi
