@@ -1,7 +1,7 @@
 {
   "woocommerce": {
-    "html": "wirecard-woocommerce-extension/vendor/wirecard/shopsystem-ui-testsuite/tests/_output/*.html",
-    "xml": "wirecard-woocommerce-extension/vendor/wirecard/shopsystem-ui-testsuite/tests/_output/*.xml",
-    "png": "wirecard-woocommerce-extension/vendor/wirecard/shopsystem-ui-testsuite/tests/_output/*.fail.png"
+    "html": "shopsystems-ui-testsuite/tests/_output/*.html",
+    "xml": "shopsystems-ui-testsuite/tests/_output/*.xml",
+    "png": "shopsystems-ui-testsuite/tests/_output/*.fail.png"
   }
 }

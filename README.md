@@ -23,9 +23,9 @@ It is possible to extend this project with specific shop system. Add new data wi
 `````
 {
   "woocommerce": {
-      "html": "wirecard-woocommerce-extension/vendor/wirecard/shopsystem-ui-testsuite/tests/_output/*.html",
-      "xml": "wirecard-woocommerce-extension/vendor/wirecard/shopsystem-ui-testsuite/tests/_output/*.xml",
-      "png": "wirecard-woocommerce-extension/vendor/wirecard/shopsystem-ui-testsuite/tests/_output/*.fail.png"
+      "html": "shopsystems-ui-testsuite/tests/_output/*.html",
+      "xml": "shopsystems-ui-testsuite/tests/_output/*.xml",
+      "png": "shopsystems-ui-testsuite/tests/_output/*.fail.png"
     }
 }
 `````
@@ -59,17 +59,7 @@ Structure
     |    ├── upload-logs-and-notify.sh      # upload test results  
     ├── woocommerce-ee                      # woocommerce related files
     |    ├── .env                           # environemnt variables
-    |    | 
-    |    ├── docker-compose.yml       
-    |    |
-    |    ├── Dockerfile                     # woocommerce Dockerfile
-    |    |
-    |    |── Dockerfile_codeception         # codeception Dockerfile
-    |    |
-    |    |── setup-and-run-ui-tests.sh      # run all scripts
-    |    |           
-    |    ├── generate-release-package.sh    # generate release package zip file 
-    |    |  
+    |    |            
     |    ├── start-shopsystem.sh            # start shop system  
     ├── configuration.json                  # test results output paths
     ├── LICENSE
