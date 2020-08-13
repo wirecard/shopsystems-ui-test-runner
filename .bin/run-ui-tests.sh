@@ -30,10 +30,8 @@ esac
 
 if [ -n "$FEATURE_FILES" ]; then
   TEST_SUITE_BRANCH=${TEST_SUITE_BRANCH}
-  export EXTENSION_VERSION="${TEST_SUITE_BRANCH}"
 else
   TEST_SUITE_BRANCH=master
-  export EXTENSION_VERSION="${GIT_BRANCH}"
 fi
 
 git clone  --branch "${TEST_SUITE_BRANCH}" https://github.com/wirecard/shopsystems-ui-testsuite.git
