@@ -24,23 +24,23 @@ git clone --depth 1 https://"${GITHUB_TOKEN}":@github.com/wirecard-cee/docker-im
 
 cd docker-images/woocommerce-ci
 
-SHOP_VERSION=5.4.2 WIRECARD_PLUGIN_VERSION=${WIRECARD_PLUGIN_VERSION} PHP_VERSION=${PHP_VERSION} INSTALL_WIRECARD_PLUGIN=true ./run.xsh ${WOOCOMMERCE_CONTAINER_NAME} --daemon
+SHOP_VERSION=5.4.2 WIRECARD_PLUGIN_VERSION=${WIRECARD_PLUGIN_VERSION} PHP_VERSION=${PHP_VERSION} INSTALL_WIRECARD_PLUGIN=true ./run.xsh ${WOOCOMMERCE_CONTAINER_NAME}
 
-docker ps
+#docker ps
 
-while ! $(curl --output /dev/null --silent --head --fail "${NGROK_URL}/wp-admin/install.php"); do
-    echo "Waiting for docker container to initialize"
-    sleep 5
-    ((c++)) && ((c == 50)) && break
-done
-
-echo "Sleeping 30 seconds"
-sleep 30
-
-# change hostname
-docker exec -i ${WOOCOMMERCE_CONTAINER_NAME} /opt/wirecard/apps/woocommerce/bin/hostname-changed.xsh "${NGROK_URL#*//}"
-
-docker exec -i ${WOOCOMMERCE_CONTAINER_NAME} bash -c "ls -la /srv/http/wp-content/plugins/"
-
-# make PayPal order number unique
-docker exec -i ${WOOCOMMERCE_CONTAINER_NAME} bash -c "sed -i 's/ = \$this->orderNumber\;/ = \$this->orderNumber . md5(time())\;/' /srv/http/wp-content/plugins/woocommerce-wirecard-ee/vendor/wirecard/payment-sdk-php/src/Transaction/PayPalTransaction.php"
+#while ! $(curl --output /dev/null --silent --head --fail "${NGROK_URL}/wp-admin/install.php"); do
+#    echo "Waiting for docker container to initialize"
+#    sleep 5
+#    ((c++)) && ((c == 50)) && break
+#done
+#
+#echo "Sleeping 30 seconds"
+#sleep 30
+#
+## change hostname
+#docker exec -i ${WOOCOMMERCE_CONTAINER_NAME} /opt/wirecard/apps/woocommerce/bin/hostname-changed.xsh "${NGROK_URL#*//}"
+#
+#docker exec -i ${WOOCOMMERCE_CONTAINER_NAME} bash -c "ls -la /srv/http/wp-content/plugins/"
+#
+## make PayPal order number unique
+#docker exec -i ${WOOCOMMERCE_CONTAINER_NAME} bash -c "sed -i 's/ = \$this->orderNumber\;/ = \$this->orderNumber . md5(time())\;/' /srv/http/wp-content/plugins/woocommerce-wirecard-ee/vendor/wirecard/payment-sdk-php/src/Transaction/PayPalTransaction.php"
