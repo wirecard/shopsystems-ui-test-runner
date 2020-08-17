@@ -34,10 +34,13 @@ while ! $(curl --output /dev/null --silent --head --fail "${NGROK_URL}/wp-admin/
     ((c++)) && ((c == 50)) && break
 done
 
-sleep 5
+echo "Sleeping 30 seconds"
+sleep 30
 
 # change hostname
 docker exec -i ${WOOCOMMERCE_CONTAINER_NAME} /opt/wirecard/apps/woocommerce/bin/hostname-changed.xsh "${NGROK_URL#*//}"
+
+docker exec -i ${WOOCOMMERCE_CONTAINER_NAME} bash -c "ls -la /srv/http/wp-content/plugins/"
 
 # make PayPal order number unique
 docker exec -i ${WOOCOMMERCE_CONTAINER_NAME} bash -c "sed -i 's/ = \$this->orderNumber\;/ = \$this->orderNumber . md5(time())\;/' /srv/http/wp-content/plugins/woocommerce-wirecard-ee/vendor/wirecard/payment-sdk-php/src/Transaction/PayPalTransaction.php"
