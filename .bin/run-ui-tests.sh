@@ -5,9 +5,6 @@ set -a
 source ${DEFAULT_REPO}/${SHOP_SYSTEM_NAME}/.env
 set +a
 
-export ENV_FILE=${DEFAULT_REPO}/${SHOP_SYSTEM_NAME}/.env
-export DOCKER_COMPOSE_FILE=${DEFAULT_REPO}/${SHOP_SYSTEM_NAME}/docker-compose.yml
-
 for ARGUMENT in "$@"; do
   KEY=$(echo "${ARGUMENT}" | cut -f1 -d=)
   VALUE=$(echo "${ARGUMENT}" | cut -f2 -d=)
@@ -32,43 +29,43 @@ case ${GIT_BRANCH} in
 esac
 
 if [ -n "$FEATURE_FILES" ]; then
-  composer require wirecard/shopsystem-ui-testsuite:dev-"${TEST_SUITE_BRANCH}"
+  TEST_SUITE_BRANCH=${TEST_SUITE_BRANCH}
+else
+  TEST_SUITE_BRANCH=master
+fi
+
+git clone  --branch "${TEST_SUITE_BRANCH}" https://github.com/wirecard/shopsystems-ui-testsuite.git
+cd shopsystems-ui-testsuite
+
+echo "Installing shopsystems-ui-testsuite dependencies"
+docker run --rm -i --volume $(pwd):/app prooph/composer:7.2 install --dev
+
+export SHOP_SYSTEM="${SHOP_SYSTEM}"
+export SHOP_URL="${NGROK_URL}"
+export SHOP_VERSION="${SHOP_VERSION}"
+export DB_HOST="${SHOP_DB_SERVER}"
+export DB_NAME="${SHOP_DB_NAME}"
+export DB_USER="${SHOP_DB_USER}"
+export DB_PASSWORD="${SHOP_DB_PASSWORD}"
+export BROWSERSTACK_USER="${BROWSERSTACK_USER}"
+export BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}"
+
+if [ -n "$FEATURE_FILES" ]; then
 
   for FEATURE_FILE in ${FEATURE_FILES}; do
     for i in {1..30}; do
       if [[ $FEATURE_FILE == *".feature"* ]]; then
-        docker-compose --env-file "${ENV_FILE}" -f "${DOCKER_COMPOSE_FILE}" run \
-	  -e SHOP_SYSTEM="${SHOP_SYSTEM}" \
-	  -e SHOP_URL="${NGROK_URL}" \
-	  -e SHOP_VERSION="${SHOP_VERSION}" \
-	  -e EXTENSION_VERSION="${TEST_SUITE_BRANCH}" \
-	  -e DB_HOST="${SHOP_DB_SERVER}" \
-	  -e DB_NAME="${SHOP_DB_NAME}" \
-	  -e DB_USER="${SHOP_DB_USER}" \
-	  -e DB_PASSWORD="${SHOP_DB_PASSWORD}" \
-	  -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
-	  -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
-	  codecept run acceptance "$FEATURE_FILE" \
-	  -g "${TEST_GROUP}" -g "${SHOP_SYSTEM}" \
-	  --env ci --html --xml
+        echo "Running tests on specific branch"
+        vendor/bin/codecept run acceptance "$FEATURE_FILE" \
+          -g "${TEST_GROUP}" -g "${SHOP_SYSTEM}" \
+          --env ci --html --xml
       fi
     done
   done
 else
-  composer require wirecard/shopsystem-ui-testsuite:dev-master
 
-  docker-compose --env-file "${ENV_FILE}" -f "${DOCKER_COMPOSE_FILE}" run \
-    -e SHOP_SYSTEM="${SHOP_SYSTEM}" \
-    -e SHOP_URL="${NGROK_URL}" \
-    -e SHOP_VERSION="${SHOP_VERSION}" \
-    -e EXTENSION_VERSION="${GIT_BRANCH}" \
-    -e DB_HOST="${SHOP_DB_SERVER}" \
-    -e DB_NAME="${SHOP_DB_NAME}" \
-    -e DB_USER="${SHOP_DB_USER}" \
-    -e DB_PASSWORD="${SHOP_DB_PASSWORD}" \
-    -e BROWSERSTACK_USER="${BROWSERSTACK_USER}" \
-    -e BROWSERSTACK_ACCESS_KEY="${BROWSERSTACK_ACCESS_KEY}" \
-    codecept run acceptance \
+  echo "Running tests"
+  vendor/bin/codecept run acceptance \
     -g "${TEST_GROUP}" -g "${SHOP_SYSTEM}" \
     --env ci --html --xml
 fi
